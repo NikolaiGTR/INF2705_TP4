@@ -22,4 +22,11 @@ out ATTRIB_GS_OUT
 void main()
 {
     // TODO
+    for (int i = 0; i < gl_in.length(); ++i)
+    {
+        attribOut.texCoords = attribIn[i].texCoords;
+        attribOut.patchDistance = attribIn[i].patchDistance;
+        gl_Position = gl_in[i].gl_Position;
+        EmitVertex();
+    }
 }
