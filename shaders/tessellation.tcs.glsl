@@ -20,4 +20,12 @@ void main()
     gl_in[2].gl_Position; // (1,1)
     gl_in[3].gl_Position; // (0,1)
 
+	if (gl_InvocationID == 0) {
+		gl_TessLevelInner[0] = tessLevelInner;
+		gl_TessLevelInner[1] = tessLevelInner;
+		gl_TessLevelOuter[0] = tessLevelOuter;
+		gl_TessLevelOuter[1] = tessLevelOuter;
+		gl_TessLevelOuter[2] = tessLevelOuter;
+		gl_TessLevelOuter[3] = tessLevelOuter;
+	}
 }
