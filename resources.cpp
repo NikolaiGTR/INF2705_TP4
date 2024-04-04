@@ -142,6 +142,8 @@ Resources::Resources()
         transformFeedback.attachShader(vertex);
 
 		// TODO
+        const GLchar* vars[] = { "positionMod", "velocityMod", "colorMod", "sizeMod", "timeToLiveMod"};
+        transformFeedback.setTransformFeedbackVaryings(vars, 5, GL_INTERLEAVED_ATTRIBS);
 
         transformFeedback.link();
 
