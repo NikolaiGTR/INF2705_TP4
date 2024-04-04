@@ -38,22 +38,34 @@ const float PATCH_EDGE_WIDTH = 0.5f;
 void main()
 {
 	// TODO
-    float smoothedHeight = smoothstep(-32.0f,32.0f,attribIn.height);
+    float smoothedHeight = attribIn.height;
+    vec4 wireFrame=vec4(vec3(edgeFactor(attribIn.barycentricCoords,WIREFRAME_WIDTH)*WIREFRAME_COLOR+WIREFRAME_COLOR),1.0f);
+    vec4 color;
     if(smoothedHeight<0.3f){
-        if(viewWireframe){}
+        if(viewWireframe){
+        color=texture(sandSampler,attribIn.texCoords)*wireFrame;
+        }else{
+        color=texture(sandSampler,attribIn.texCoords);}
     }
     else if(smoothedHeight<0.35f){
         if(viewWireframe){}
+        else{}
     }
     else if(smoothedHeight<0.6f){
-        if(viewWireframe){}
+        if(viewWireframe){color=texture(groundSampler,attribIn.texCoords)*wireFrame;}
+        else{color=texture(groundSampler,attribIn.texCoords);}
     }
     else if(smoothedHeight<0.65){
         if(viewWireframe){}
+        else{
+        }
     }
     else{
-        if(viewWireframe){}
+        if(viewWireframe){color=texture(snowSampler,attribIn.texCoords)*wireFrame;}
+        else{color=texture(snowSampler,attribIn.texCoords);}
     }
-    // FragColor=vec4(1.0f,0.5f,0.5f,1.0f);
+    //FragColor=vec4(1.0f,0.5f,0.5f,1.0f);
+    //FragColor = vec4(vec3(edgeFactor(attribIn.barycentricCoords,WIREFRAME_WIDTH)),1.0f);
+    FragColor=color;
     
 }

@@ -34,12 +34,11 @@ void main()
 {
 	// TODO
     vec4 positionInterpolee = interpole(gl_in[0].gl_Position, gl_in[1].gl_Position, gl_in[2].gl_Position, gl_in[3].gl_Position);
-    gl_Position = mvp * positionInterpolee;
 
-    vec2 tex = ( positionInterpolee.xy / PLANE_SIZE + 0.5f) / 4;
-
-    attribOut.height = texture(heighmapSampler, tex).y * 64.0 - 32;
-    attribOut.patchDistance = vec4(gl_TessCoord, 1 - gl_TessCoord);
+    vec2 tex = ( positionInterpolee.xz / PLANE_SIZE + 0.5f) /4;
+    float height= texture(heighmapSampler, tex).x;
+    attribOut.height = height;
     attribOut.texCoords = gl_TessCoord.xy * 2;
     //AttribsOut.couleur = interpole(AttribsIn[0].couleur, AttribsIn[1].couleur, AttribsIn[2].couleur, AttribsIn[3].couleur);
+    gl_Position = mvp * (positionInterpolee+vec4(0.0f,height * 64.0f - 32.0f,0.0f,0.0f));
 }
