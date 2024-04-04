@@ -38,4 +38,22 @@ const float PATCH_EDGE_WIDTH = 0.5f;
 void main()
 {
 	// TODO
+    float smoothedHeight = smoothstep(-32.0f,32.0f,attribIn.height);
+    if(smoothedHeight<0.3f){
+        if(viewWireframe){}
+    }
+    else if(smoothedHeight<0.35f){
+        if(viewWireframe){}
+    }
+    else if(smoothedHeight<0.6f){
+        if(viewWireframe){}
+    }
+    else if(smoothedHeight<0.65){
+        if(viewWireframe){}
+    }
+    else{
+        if(viewWireframe){}
+    }
+    // FragColor=vec4(1.0f,0.5f,0.5f,1.0f);
+    
 }

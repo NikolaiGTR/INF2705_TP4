@@ -23,7 +23,7 @@ vec4 interpole( vec4 v0, vec4 v1, vec4 v2, vec4 v3 )
 {
     // mix( x, y, f ) = x * (1-f) + y * f.
     vec4 v01 = mix(v0, v1, gl_TessCoord.x);
-    vec4 v23 = mix(v2, v3, gl_TessCoord.x);
+    vec4 v23 = mix(v3, v2, gl_TessCoord.x);
     return mix(v01, v23, gl_TessCoord.y);
 }
 
