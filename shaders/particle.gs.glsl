@@ -29,7 +29,7 @@ void main()
         vec2 dpixels = gl_in[0].gl_PointSize * coins[i];
         vec4 pos = vec4(gl_in[0].gl_Position.xy + dpixels, gl_in[0].gl_Position.xy);
         gl_Position = projection * pos;
-        attribOut.texCoords += projection * pos;
+        attribOut.texCoords += (projection * vec4(coins[i], 1.0f, 1.0f)).xy;
         EmitVertex();
     }
 } 

@@ -101,6 +101,15 @@ ParticleScene::ParticleScene(Resources& resources, Window& w)
     glEnable(GL_PROGRAM_POINT_SIZE);
     
     // TODO
+    glGenVertexArrays(1, &m_vao);
+    glBindVertexArray(m_vao);
+
+    glGenBuffers(1, &m_vbo[0]);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbo[1]);
+
+    glGenQueries(1, &m_tfo);
+    glGenTransformFeedbacks(1, &m_tfo);
+
 }
 
 ParticleScene::~ParticleScene()
