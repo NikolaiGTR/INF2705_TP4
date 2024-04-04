@@ -157,7 +157,7 @@ void ParticleScene::render(glm::mat4& view, glm::mat4& projPersp)
 
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo[0]);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), reinterpret_cast<void*>(offsetof(Particle, position)));
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Particle), reinterpret_cast<void*>(offsetof(Particle, velocity)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), reinterpret_cast<void*>(offsetof(Particle, velocity)));
     glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Particle), reinterpret_cast<void*>(offsetof(Particle, color)));
     glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Particle), reinterpret_cast<void*>(offsetof(Particle, size)));
     glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), reinterpret_cast<void*>(offsetof(Particle, timeToLive)));
@@ -170,11 +170,12 @@ void ParticleScene::render(glm::mat4& view, glm::mat4& projPersp)
     // Disable raster
     glEnable(GL_RASTERIZER_DISCARD);
     glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, m_tfo);
-    glBeginTransformFeedback(GL_POINT); // GL_POINT or POINTS?
-    glDrawArrays(GL_POINTS, 0, sizeof(particles) / sizeof(Particle));
+    glBeginTransformFeedback(GL_POINTS); // GL_POINT or POINTS?
+    glDrawArrays(GL_POINTS, 0, m_nParticles);
     glEndTransformFeedback();
     // reenable aster
     glDisable(GL_RASTERIZER_DISCARD);
+
     // TODO: swap buffers
     std::swap(m_vbo[0], m_vbo[1]);
 
@@ -196,7 +197,7 @@ void ParticleScene::render(glm::mat4& view, glm::mat4& projPersp)
     glBindVertexArray(m_vao);
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo[0]);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), reinterpret_cast<void*>(offsetof(Particle, position)));
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Particle), reinterpret_cast<void*>(offsetof(Particle, velocity)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), reinterpret_cast<void*>(offsetof(Particle, velocity)));
     glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(Particle), reinterpret_cast<void*>(offsetof(Particle, color)));
     glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Particle), reinterpret_cast<void*>(offsetof(Particle, size)));
     glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), reinterpret_cast<void*>(offsetof(Particle, timeToLive)));

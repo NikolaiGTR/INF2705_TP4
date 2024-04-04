@@ -21,19 +21,10 @@ uniform mat4 projection;
 void main()
 {
     // TODO
-    //float min = 0 - attribIn[0].size / 2;
-    //float max = 0 + attribIn[0].size / 2;
-
-    // coins[0] = position + vec2(-x/2, -y/2)
-    // coins[1] = position + vec2(x/2, -y/2)
-    // coins[2] = position + vec2(x/2, y/2)
-    // coins[3] = position + vec2(-x/2, y/2)
-    // position + vec2(-attribIn[1].size.x / 2, -attribIn[1].size.y / 2)
-
     vec2 coins[4] = { vec2(-attribIn[0].size.x / 2, -attribIn[0].size.y / 2),
-                      vec2(attribIn[1].size.x / 2, -attribIn[1].size.y / 2),
-                      vec2(attribIn[2].size.x / 2, attribIn[2].size.y / 2),
-                      vec2(-attribIn[3].size.x / 2, -attribIn[3].size.y / 2) };
+                      vec2(attribIn[0].size.x / 2, -attribIn[0].size.y / 2),
+                      vec2(attribIn[0].size.x / 2, attribIn[0].size.y / 2),
+                      vec2(-attribIn[0].size.x / 2, -attribIn[0].size.y / 2) };
      
     for (int i = 0; i < 4; ++i) {
         //vec2 dpixels = gl_in[0].gl_PointSize + coins[i];
