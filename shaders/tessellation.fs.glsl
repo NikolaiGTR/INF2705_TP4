@@ -48,24 +48,31 @@ void main()
         color=texture(sandSampler,attribIn.texCoords);}
     }
     else if(smoothedHeight<0.35f){
-        if(viewWireframe){}
-        else{}
+        float grassPortion=smoothstep(0.30,0.35,smoothedHeight);
+        if(viewWireframe){            
+        color=(texture(sandSampler,attribIn.texCoords)*(1-grassPortion)+texture(groundSampler, attribIn.texCoords)*grassPortion)*wireFrame;
+}
+        else{
+            color=texture(sandSampler,attribIn.texCoords)*(1-grassPortion)+texture(groundSampler, attribIn.texCoords)*grassPortion;
+        }
     }
     else if(smoothedHeight<0.6f){
         if(viewWireframe){color=texture(groundSampler,attribIn.texCoords)*wireFrame;}
         else{color=texture(groundSampler,attribIn.texCoords);}
     }
     else if(smoothedHeight<0.65){
-        if(viewWireframe){}
+        float snowPortion = smoothstep(0.6,0.65,smoothedHeight);
+        if(viewWireframe){        
+            color = (texture(groundSampler, attribIn.texCoords)*(1-snowPortion)+texture(snowSampler,attribIn.texCoords)*snowPortion)*wireFrame;
+        }
         else{
+            color = texture(groundSampler, attribIn.texCoords)*(1-snowPortion)+texture(snowSampler,attribIn.texCoords)*snowPortion;
         }
     }
     else{
         if(viewWireframe){color=texture(snowSampler,attribIn.texCoords)*wireFrame;}
         else{color=texture(snowSampler,attribIn.texCoords);}
     }
-    //FragColor=vec4(1.0f,0.5f,0.5f,1.0f);
-    //FragColor = vec4(vec3(edgeFactor(attribIn.barycentricCoords,WIREFRAME_WIDTH)),1.0f);
     FragColor=color;
     
 }
