@@ -32,7 +32,7 @@ void main()
         gl_Position = projection * pos;
 
         // pour texCoords il faut appliquer la même logique qu'avec les coordonnées de tessellation (les mettres entre 0 et 1)
-        attribOut.texCoords += coins[i];
+        attribOut.texCoords += smoothstep(-0.5,0.5,coins[i]);
         EmitVertex();
     }
     EndPrimitive();
