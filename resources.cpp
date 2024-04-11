@@ -144,6 +144,7 @@ Resources::Resources()
 		// TODO
         const GLchar* vars[] = { "positionMod", "velocityMod", "colorMod", "sizeMod", "timeToLiveMod"};
         transformFeedback.setTransformFeedbackVaryings(vars, 5, GL_INTERLEAVED_ATTRIBS);
+        GL_CHECK_ERROR;
 
         transformFeedback.link();
 

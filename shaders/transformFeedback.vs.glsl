@@ -70,19 +70,29 @@ void main()
     float velModule = mix(INITIAL_SPEED_MIN, INITIAL_SPEED_MAX, random());
 
     // Temps de vie maximal initial
+    float tempsVie = mix(INITIAL_TIME_TO_LIVE_RATIO * MAX_TIME_TO_LIVE, MAX_TIME_TO_LIVE, random());
 
     // Couleur initiale
-    vec4 color = vec4(YELLOW_COLOR, 0);
+    vec4 color = vec4(YELLOW_COLOR, INITIAL_ALPHA);
 
     // Taille Initiale
     vec2 sizeInit = vec2(size.x / 2, size.y);
 
 
-    // Sorties test
-    positionMod = pos;
-    velocityMod = velDir;
-    colorMod = vec4(1.0f, 5.0f, 5.0f, 1.0f);
-    sizeMod = sizeInit;
-    timeToLiveMod = timeToLive;
+    // Sorties
+    positionMod = pos + (velDir * velModule) * dt;
+    velocityMod = velocity + ACCELERATION * dt;
+    if (time < 0.25)
+        colorMod = vec4(YELLOW_COLOR, 0.1f);
+    else if (time < 0.3)
+        colorMod = vec4(mix(YELLOW_COLOR, ORANGE_COLOR, time), 0.1f);
+    else if (time < 0.5)
+        colorMod = vec4(ORANGE_COLOR, 0.1f);
+    else
+        colorMod = vec4(mix(YELLOW_COLOR, DARK_RED_COLOR, time), 0.1f);
+    colorMod = color;
+    // NO MACROS FOR VARIABLE FACTOR FROM 1 TO 1.5?
+    sizeMod = size * mix(1, 1.5f, time);
+    timeToLiveMod -= dt;
 
 }

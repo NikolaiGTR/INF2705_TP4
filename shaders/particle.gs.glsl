@@ -35,4 +35,5 @@ void main()
         attribOut.texCoords += coins[i];
         EmitVertex();
     }
+    EndPrimitive();
 } 
