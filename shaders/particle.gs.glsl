@@ -20,19 +20,16 @@ uniform mat4 projection;
 
 void main()
 {
-    // TODO
     vec2 coins[4] = { vec2(-attribIn[0].size.x / 2, -attribIn[0].size.y / 2),
                       vec2(attribIn[0].size.x / 2, -attribIn[0].size.y / 2),
-                      vec2(attribIn[0].size.x / 2, attribIn[0].size.y / 2),
-                      vec2(-attribIn[0].size.x / 2, -attribIn[0].size.y / 2) };
+                      vec2(-attribIn[0].size.x / 2, attribIn[0].size.y / 2),
+                      vec2(attribIn[0].size.x / 2, attribIn[0].size.y / 2) };
      
     for (int i = 0; i < 4; ++i) {
-        //vec2 dpixels = gl_in[0].gl_PointSize + coins[i];
-        vec4 pos = vec4(gl_in[0].gl_Position.xy + coins[i], gl_in[0].gl_Position.zw);
+        vec4 pos = vec4(gl_in[0].gl_Position.xy + (coins[i]), gl_in[0].gl_Position.zw);
         gl_Position = projection * pos;
-
-        // pour texCoords il faut appliquer la même logique qu'avec les coordonnées de tessellation (les mettres entre 0 et 1)
-        attribOut.texCoords += smoothstep(-0.5,0.5,coins[i]);
+        attribOut.texCoords = coins[i] + 0.5;
+        attribOut.color = attribIn[0].color;
         EmitVertex();
     }
     EndPrimitive();

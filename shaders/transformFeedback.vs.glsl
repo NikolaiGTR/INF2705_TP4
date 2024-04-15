@@ -56,43 +56,57 @@ const vec3 DARK_RED_COLOR = vec3(0.1, 0.0, 0.0);
 
 const vec3 ACCELERATION = vec3(0.0f, 0.1f, 0.0f);
 
+// Extra constants
+const vec2 INITIAL_SIZE = vec2(0.5f, 1.0f);
+const float INITIAL_GROWTH_FACTOR = 1.0f;
+const float MAX_GROWTH_FACTOR = 1.5f;
+
 void main()
 {
     // TODO
+    // If time to live expired, on crée une nouvelle particule
+    if (timeToLive < 0) {
+        // Position initiale
+        positionMod = randomInCircle(INITIAL_RADIUS, INITIAL_HEIGHT);
 
-    // Position initiale
-    vec3 pos = randomInCircle(INITIAL_RADIUS, INITIAL_HEIGHT);
+        // Direction de Vélocité initiale
+        vec3 velDir = randomInCircle(FINAL_RADIUS, FINAL_HEIGHT);
 
-    // Direction de Vélocité initiale
-    vec3 velDir = randomInCircle(FINAL_RADIUS, FINAL_HEIGHT);
+        // Module de Vélocité initial
+        float velMagnitude = mix(INITIAL_SPEED_MIN, INITIAL_SPEED_MAX, random());
 
-    // Module de Vélocité initial
-    float velModule = mix(INITIAL_SPEED_MIN, INITIAL_SPEED_MAX, random());
+        velocityMod = velDir * velMagnitude;
 
-    // Temps de vie maximal initial
-    float tempsVie = mix(INITIAL_TIME_TO_LIVE_RATIO * MAX_TIME_TO_LIVE, MAX_TIME_TO_LIVE, random());
+        // Couleur initiale
+        colorMod = vec4(YELLOW_COLOR, INITIAL_ALPHA);
 
-    // Couleur initiale
-    vec4 color = vec4(YELLOW_COLOR, INITIAL_ALPHA);
+        // Taille Initiale
+        sizeMod = INITIAL_SIZE;
 
-    // Taille Initiale
-    vec2 sizeInit = vec2(size.x / 2, size.y);
-
-
-    // Sorties
-    positionMod = pos + (velDir * velModule) * dt;
-    velocityMod = velocity + ACCELERATION * dt;
-    if (time < 0.25)
-        colorMod = vec4(YELLOW_COLOR, 0.1f);
-    else if (time < 0.3)
-        colorMod = vec4(mix(YELLOW_COLOR, ORANGE_COLOR, time), 0.1f);
-    else if (time < 0.5)
-        colorMod = vec4(ORANGE_COLOR, 0.1f);
+        // Temps de vie maximal
+        timeToLiveMod = mix(INITIAL_TIME_TO_LIVE_RATIO * MAX_TIME_TO_LIVE, MAX_TIME_TO_LIVE, random());
+    }
+    // Mise à jour pour les particules qui ne sont pas expirées
     else
-        colorMod = vec4(mix(YELLOW_COLOR, DARK_RED_COLOR, time), 0.1f);
-    colorMod = color;
-    // NO MACROS FOR VARIABLE FACTOR FROM 1 TO 1.5?
-    sizeMod = size * mix(1, 1.5f, time);
-    timeToLiveMod -= dt;
+    {
+        float lifeTimeNormalized = timeToLive / MAX_TIME_TO_LIVE;
+        float lifeTime = 1 - lifeTimeNormalized;
+        float alpha = mix(INITIAL_ALPHA, ALPHA, smoothstep(0.0, 0.2, lifeTime) * (1 - smoothstep(0.8, 1.0, lifeTime)));
 
+
+        positionMod = position + velocity * dt;
+        velocityMod = velocity + ACCELERATION * dt;
+
+        if (lifeTime < 0.25)
+            colorMod = vec4(YELLOW_COLOR, alpha);
+        else if (lifeTime < 0.3)
+            colorMod = vec4(mix(YELLOW_COLOR, ORANGE_COLOR, lifeTime), alpha);
+        else if (lifeTime < 0.5)
+            colorMod = vec4(ORANGE_COLOR, alpha);
+        else
+            colorMod = vec4(mix(YELLOW_COLOR, DARK_RED_COLOR, lifeTime), alpha);
+
+        sizeMod = size * mix(INITIAL_GROWTH_FACTOR, MAX_GROWTH_FACTOR, lifeTime);
+        timeToLiveMod = timeToLive - dt;
+    }
 }
