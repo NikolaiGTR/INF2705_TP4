@@ -91,7 +91,7 @@ void main()
     {
         float lifeTimeNormalized = timeToLive / MAX_TIME_TO_LIVE;
         float lifeTime = 1 - lifeTimeNormalized;
-        float alpha = mix(INITIAL_ALPHA, ALPHA, smoothstep(0.0, 0.2, lifeTime) * (1 - smoothstep(0.8, 1.0, lifeTime)));
+        float alpha = smoothstep(0.0, 0.2, lifeTime) * (1 - smoothstep(0.8, 1.0, lifeTime));
 
 
         positionMod = position + velocity * dt;
@@ -100,11 +100,11 @@ void main()
         if (lifeTime < 0.25)
             colorMod = vec4(YELLOW_COLOR, alpha);
         else if (lifeTime < 0.3)
-            colorMod = vec4(mix(YELLOW_COLOR, ORANGE_COLOR, lifeTime), alpha);
+            colorMod = vec4(mix(YELLOW_COLOR, ORANGE_COLOR, lifeTime),alpha);
         else if (lifeTime < 0.5)
             colorMod = vec4(ORANGE_COLOR, alpha);
         else
-            colorMod = vec4(mix(YELLOW_COLOR, DARK_RED_COLOR, lifeTime), alpha);
+            colorMod = vec4(mix(ORANGE_COLOR, DARK_RED_COLOR, lifeTime), alpha);
 
         sizeMod = size * mix(INITIAL_GROWTH_FACTOR, MAX_GROWTH_FACTOR, lifeTime);
         timeToLiveMod = timeToLive - dt;
