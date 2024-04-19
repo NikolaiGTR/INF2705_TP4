@@ -20,6 +20,7 @@ uniform mat4 projection;
 
 void main()
 {
+    vec2 texCoords[4] = { vec2(0.0,0.0),vec2(1.0,0.0),vec2(0.0,1.0),vec2(1.0,1.0)};
     vec2 coins[4] = { vec2(-attribIn[0].size.x / 2, -attribIn[0].size.y / 2),
                       vec2(attribIn[0].size.x / 2, -attribIn[0].size.y / 2),
                       vec2(-attribIn[0].size.x / 2, attribIn[0].size.y / 2),
@@ -28,7 +29,7 @@ void main()
     for (int i = 0; i < 4; ++i) {
         vec4 pos = vec4(gl_in[0].gl_Position.xy + (coins[i]), gl_in[0].gl_Position.zw);
         gl_Position = projection * pos;
-        attribOut.texCoords = coins[i] + 0.5;
+        attribOut.texCoords = texCoords[i];
         attribOut.color = attribIn[0].color;
         EmitVertex();
     }

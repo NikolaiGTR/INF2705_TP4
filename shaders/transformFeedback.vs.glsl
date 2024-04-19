@@ -73,9 +73,13 @@ void main()
         vec3 velDir = randomInCircle(FINAL_RADIUS, FINAL_HEIGHT);
 
         // Module de Vélocité initial
-        float velMagnitude = mix(INITIAL_SPEED_MIN, INITIAL_SPEED_MAX, random());
+        // float velMagnitude = mix(INITIAL_SPEED_MIN, INITIAL_SPEED_MAX, random());
+        float velMagnitude = INITIAL_SPEED_MAX;
 
-        velocityMod = velDir * velMagnitude;
+        //velocityMod = velDir * velMagnitude;
+        //velocityMod =vec3(0.0f);
+        velocityMod = normalize(randomInCircle(0.5,5.0))*mix(0.5,0.6,random());
+
 
         // Couleur initiale
         colorMod = vec4(YELLOW_COLOR, INITIAL_ALPHA);
@@ -106,7 +110,7 @@ void main()
         else
             colorMod = vec4(mix(ORANGE_COLOR, DARK_RED_COLOR, lifeTime), alpha);
 
-        sizeMod = size * mix(INITIAL_GROWTH_FACTOR, MAX_GROWTH_FACTOR, lifeTime);
+        sizeMod = vec2(mix(INITIAL_GROWTH_FACTOR, MAX_GROWTH_FACTOR, lifeTime));
         timeToLiveMod = timeToLive - dt;
     }
 }
