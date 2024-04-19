@@ -21,7 +21,7 @@ out ATTRIB_GS_OUT
 
 void main()
 {
-    // TODO
+
     for (int i = 0; i < gl_in.length(); ++i)
     {
         attribOut.height=attribIn[i].height;

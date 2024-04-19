@@ -73,11 +73,7 @@ void main()
         vec3 velDir = randomInCircle(FINAL_RADIUS, FINAL_HEIGHT);
 
         // Module de Vélocité initial
-        // float velMagnitude = mix(INITIAL_SPEED_MIN, INITIAL_SPEED_MAX, random());
-        float velMagnitude = INITIAL_SPEED_MAX;
-
-        //velocityMod = velDir * velMagnitude;
-        //velocityMod =vec3(0.0f);
+        float velMagnitude = mix(INITIAL_SPEED_MIN, INITIAL_SPEED_MAX, random());
         velocityMod = normalize(randomInCircle(0.5,5.0))*mix(0.5,0.6,random());
 
 
@@ -95,7 +91,7 @@ void main()
     {
         float lifeTimeNormalized = timeToLive / MAX_TIME_TO_LIVE;
         float lifeTime = 1 - lifeTimeNormalized;
-        float alpha = smoothstep(0.0, 0.2, lifeTime) * (1 - smoothstep(0.8, 1.0, lifeTime));
+        float alpha = ALPHA*smoothstep(0.0, 0.2, lifeTime) * (1 - smoothstep(0.8, 1.0, lifeTime));
 
 
         positionMod = position + velocity * dt;

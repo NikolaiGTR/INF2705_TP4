@@ -37,7 +37,6 @@ TesselationScene::TesselationScene(Resources& resources)
 : Scene(resources)
 , m_viewWireframe(0)
 {
-    // TODO
     glPatchParameteri(GL_PATCH_VERTICES, 4);
 }
 
@@ -67,7 +66,7 @@ void TesselationScene::render(glm::mat4& view, glm::mat4& projPersp)
 
     glUniform1i(m_res.viewWireframeLocationTessellation, m_viewWireframe);
 
-	// TODO: To remove, only for debug
+	// To remove, only for debug
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//GL_FILL
 	
 
@@ -100,7 +99,6 @@ ParticleScene::ParticleScene(Resources& resources, Window& w)
 {
     glEnable(GL_PROGRAM_POINT_SIZE);
     
-    // TODO
 
     // Allocation des objets OpenGL
     glGenVertexArrays(1, &m_vao);
@@ -128,7 +126,6 @@ ParticleScene::ParticleScene(Resources& resources, Window& w)
 
 ParticleScene::~ParticleScene()
 {
-    // TODO
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glDeleteVertexArrays(1, &m_vao);
@@ -152,7 +149,7 @@ void ParticleScene::render(glm::mat4& view, glm::mat4& projPersp)
 
     m_res.transformFeedback.use();
     
-    // TODO: buffer binding
+    //  buffer binding
     glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, m_vbo[1]);
     glBindVertexArray(m_vao);
 
@@ -172,7 +169,7 @@ void ParticleScene::render(glm::mat4& view, glm::mat4& projPersp)
     glUniform1f(m_res.timeLocationTransformFeedback, time);
     glUniform1f(m_res.dtLocationTransformFeedback, dt);
     GL_CHECK_ERROR;
-    // TODO: update particles
+    // update particles
     // Disable raster
     glEnable(GL_RASTERIZER_DISCARD);
     glBindTransformFeedback(GL_TRANSFORM_FEEDBACK, m_tfo);
@@ -199,7 +196,7 @@ void ParticleScene::render(glm::mat4& view, glm::mat4& projPersp)
     m_res.particule.use();
     m_res.flameTexture.use();
 
-    // TODO: buffer binding
+    // buffer binding
     glBindVertexArray(m_vao);
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo[0]);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Particle), reinterpret_cast<void*>(offsetof(Particle, position)));
@@ -218,7 +215,7 @@ void ParticleScene::render(glm::mat4& view, glm::mat4& projPersp)
     glUniformMatrix4fv(m_res.modelViewLocationParticle, 1, GL_FALSE, &modelView[0][0]);
     glUniformMatrix4fv(m_res.projectionLocationParticle, 1, GL_FALSE, &projPersp[0][0]);
     GL_CHECK_ERROR;
-    // TODO: Draw particles without depth write and with blending
+    // Draw particles without depth write and with blending
     glDepthMask(GL_FALSE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

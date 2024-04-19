@@ -15,16 +15,11 @@ float calcTess(vec4 centerPoint) {
 	return mix(MAX_TESS, MIN_TESS, (clamp(length(centerPoint.xyz), MIN_DIST, MAX_DIST) - MIN_DIST) / (MAX_DIST - MIN_DIST));
 }
 
-// mix(MAX_TESS, MIN_TESS, (clamp(length(centerOL0.xyz), MIN_DIST, MAX_DIST) - MIN_DIST)/(MAX_DIST - MIN_DIST)
 
 void main()
 {
-	// TODO
 
     gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position; // (0,0)
-	//gl_out[gl_InvocationID].gl_Position = gl_in[1].gl_Position; // (1,0)
-	//gl_out[gl_InvocationID].gl_Position = gl_in[2].gl_Position; // (1,1)
-	//gl_out[gl_InvocationID].gl_Position = gl_in[3].gl_Position; // (0,1)
 
 	// Centres des arrêtes
 	vec4 centerOL0 = modelView * (gl_in[3].gl_Position + gl_in[0].gl_Position) / 2;
